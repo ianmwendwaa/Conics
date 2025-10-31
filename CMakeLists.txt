@@ -8,6 +8,7 @@ qt_standard_project_setup()
 qt_add_executable(Conics
     main.cpp
     src/parabola/parabola.h src/parabola/parabola.cpp
+    src/parabola/hyperbola.h src/parabola/hyperbola.cpp
 )
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(Conics
