@@ -7,6 +7,6 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     Parabola p;
-    p.startEngine();
+    p.drawParabola();
     return a.exec();
 }

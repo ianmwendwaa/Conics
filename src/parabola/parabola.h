@@ -11,14 +11,18 @@ public:
     Parabola();
     std::string fmtEquation();// formats the equation
     bool isVertexAtO();// assesses position of vertex and applies respective methods
-    bool isXPos(const char* rightSide);
-    bool isYPos(const char* rightSide);
+    bool isXPositive(const char* rightSide);// checks if the X parabola is positive
+    bool isYPositive(const char* rightSide);// checks if the Y parabola is positive
+
+    void analyseParabola();
 
     void xParabola();
     void yParabola();
     int p();// returns the value of p
+    int directrix();// returns the c value of directrix
+    int latusRectumLen();// returns the length of latus rectum
     std::pair<int, int> foci(const int& f1, const int& f2);
-    void parabolaOrientation();// ascertains orientation
+    void drawParabola();// draws a simple parabola on the terminal
 
     int startEngine();// commences parabola operations
 
@@ -30,13 +34,14 @@ private:
 
     int eqPos = 0;
 
-    //Booleans to ascertain orientation of the parabola
+    // ascertaining orientation of the parabola
     bool isUpward;
     bool isRightward;
 
     bool vertexIsAtO;
 
-    int h,k;
+    int xV,yV;
+    int h, k;
 
     std::pair<int, int> f; // stores coordinates of the focus
 

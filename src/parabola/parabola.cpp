@@ -35,36 +35,11 @@ std::string Parabola::fmtEquation(){
 
 bool Parabola::isVertexAtO()
 {
-    // // obtain the string first from the formatted equation
-    // formattedStr = fmtEquation();
 
-    //find the occurence of v to obtain the coordinates of the vertex
-    int vPos = formattedStr.find("v");
-
-    std::string vStr = formattedStr.substr(vPos + 1);// to move right from 'v' i.e: 'h,k)'
-
-    // parse further to obtain first and second values from the coordinates v(h,k)
-    int bPos = vStr.find("(");// occurrence of the first bracket
-    int cPos = vStr.find(",");// occurrence of the comma separator
-
-    std::string rawCoordinates = vStr.substr(bPos + 1);// 'h, k)'
-
-    int h = std::atoi(&rawCoordinates.at(0));
-
-    std::string kStr =vStr.substr(cPos + 1);// i.e: 'k)'
-    int k = std::atoi(&kStr.at(0));
-
-    auto vCoordinates = std::make_pair(h, k);// pair them up to make the vertex coordinates
-
-    if(vCoordinates.first == 0 && vCoordinates.second == 0){
-        vertexIsAtO = true;//if V(0,0), it's at the origin
-    }else{
-        vertexIsAtO = false;//if V ≠ (0,0), it's somewhere else on the Cartesian plane
-    }
     return vertexIsAtO;
 }
 
-bool Parabola::isXPos(const char* rightSide)
+bool Parabola::isXPositive(const char *rightSide)
 {
     if(*rightSide != '-'){
         isUpward = true;
@@ -74,7 +49,7 @@ bool Parabola::isXPos(const char* rightSide)
     return isUpward;
 }
 
-bool Parabola::isYPos(const char* rightSide)
+bool Parabola::isYPositive(const char *rightSide)
 {
     if(*rightSide != '-'){
         isRightward = true;
@@ -84,24 +59,9 @@ bool Parabola::isYPos(const char* rightSide)
     return isRightward;
 }
 
-int Parabola::p()
+void Parabola::analyseParabola()
 {
-    if(m_rightSide.at(0) != '-'){
-        m_p = std::atoi(&m_rightSide.at(0));
-    }else{
-        m_p = std::atoi(&m_rightSide.at(1));
-    }
-    return m_p/4;
-}
-
-std::pair<int, int> Parabola::foci(const int& f1, const int& f2)
-{
-    return std::make_pair(f1, f2);
-}
-
-void Parabola::parabolaOrientation(){
-    // if equation begins with x and has a positive -> upwards else down
-    // if it begins with y and has a positive -> right else left
+    //1. Ascertain the type of parabola and then apply the respective function
     if(firstChar == 'x'){
         xParabola();
     }
@@ -121,16 +81,66 @@ void Parabola::parabolaOrientation(){
             yParabola();
         }
     }
+
+    //2. Determine whether the vertex is at V(0,0) or V(h,k)
+    //find the occurence of v to obtain the coordinates of the vertex
+    int vPos = formattedStr.find("v");
+
+    std::string vStr = formattedStr.substr(vPos + 1);// to move right from 'v' i.e: '(h,k)'
+
+    // parse further to obtain first and second values from the coordinates v(h,k)
+    int bPos = vStr.find("(");// occurrence of the first bracket
+    int cPos = vStr.find(",");// occurrence of the comma separator
+
+    std::string rawCoordinates = vStr.substr(bPos + 1);// 'h, k)'
+
+    xV = std::atoi(&rawCoordinates.at(0));
+
+    std::string kStr =vStr.substr(cPos + 1);// i.e: 'k)'
+    yV = std::atoi(&kStr.at(0));
+
+    auto vCoordinates = std::make_pair(xV, yV);// pair them up to make the vertex coordinates
+
+    if(vCoordinates.first == 0 && vCoordinates.second == 0){
+        vertexIsAtO = true;//if V(0,0), it's at the origin
+    }else{
+        vertexIsAtO = false;//if V ≠ (0,0), it's somewhere else on the Cartesian plane
+    }
+}
+
+int Parabola::p()
+{
+    if(m_rightSide.at(0) != '-'){
+        m_p = std::atoi(&m_rightSide.at(0));
+    }else{
+        m_p = std::atoi(&m_rightSide.at(1));
+    }
+    return m_p/4;
+}
+
+int Parabola::directrix()
+{
+    return 0;
+}
+
+int Parabola::latusRectumLen()
+{
+    return 4 * p();
+}
+
+std::pair<int, int> Parabola::foci(const int& f1, const int& f2)
+{
+    return std::make_pair(f1, f2);
 }
 
 void Parabola::xParabola(){
     // checking if the first occurrence of char is not '-'
-    if(isXPos(&m_rightSide.at(0))){
+    if(isXPositive(&m_rightSide.at(0))){
         //if so, parabola is oriented upwards applying
         std::cout << "Parabola is oriented upwards\n";
 
         // check position of the vertex to ascertain what foci formula to apply
-        if(!isVertexAtO()){
+        if(!vertexIsAtO){
             // equation will be given by: (x-h)² = 4p(y-k)
             // focus will then be V(h, k+p)
 
@@ -142,7 +152,6 @@ void Parabola::xParabola(){
                 h = -h;// apply a negative to it since it would make the symbol on the equation positive
                 // eg. (x+2)² would make h = -2, comparing it to the formula.
             }
-
             // for the right side, getting k will be a little different since 4p could be negative
             // 1. check if 4p is negative
             if(m_rightSide.at(0) == '-'){
@@ -160,7 +169,7 @@ void Parabola::xParabola(){
             }
             std::cout << "Vertex will be at: ("<<h <<"," <<k<<"\n";
 
-        }else if(isVertexAtO()){
+        }else if(vertexIsAtO){
             //if it is at the origin,
             f = foci(0, p());
             std::cout << "Focus: ("<< f.first<<"," << f.second << ")\n";
@@ -179,8 +188,9 @@ void Parabola::xParabola(){
         std::cout << "Focus: ("<< f.first<<"," << f.second << ")\n";
     }
 }
+
 void Parabola::yParabola(){
-    if(isYPos(&m_rightSide.at(0))){
+    if(isYPositive(&m_rightSide.at(0))){
         std::cout << "Parabola is oriented rightwards\n";
 
         // Focus will now be equal to F(±p, 0)
@@ -192,8 +202,26 @@ void Parabola::yParabola(){
         std::cout << "Focus: ("<< f.first<<"," << f.second << ")\n";
     }
 }
+
+void Parabola::drawParabola()
+{
+    // y and x represent the corresponding axes
+    std::cout << "^" << std::endl;
+    for(int y = 0; y < 8; y++){
+        std::cout << "|"<< std::endl;
+        if(y == 6){
+            for(int x = 0; x < 21; x++){
+                std::cout << "-";
+                if(x == 20){
+                    std::cout << ">";
+                }
+            }
+        }
+    }
+}
+
 int Parabola::startEngine(){
-    parabolaOrientation();
+    fmtEquation();
     return 0;
 }
 
