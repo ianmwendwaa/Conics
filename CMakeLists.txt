@@ -11,6 +11,7 @@ qt_add_executable(Conics
     src/hyperbola/hyperbola.h src/hyperbola/hyperbola.cpp
 
     menu/menu.h
+    menu/menu.cpp
 )
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(Conics

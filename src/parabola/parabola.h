@@ -9,16 +9,15 @@ class Parabola
 {
 public:
     Parabola();
-    std::string fmtEquation();// formats the equation
-    bool isVertexAtO();// assesses position of vertex and applies respective methods
-    bool isXPositive(const char* rightSide);// checks if the X parabola is positive
-    bool isYPositive(const char* rightSide);// checks if the Y parabola is positive
+    std::string inputAndFormatEqtn();// formats the equation
+    bool isVertexAtOrigin();// assesses position of vertex and applies respective methods
+    bool isParabolaPositive(const std::string& rightSide);// checks if the parabola is positive
 
     void analyseParabola();
 
     void xParabola();
     void yParabola();
-    int p();// returns the value of p
+    int calculateP();// returns the value of p
     int directrix();// returns the c value of directrix
     int latusRectumLen();// returns the length of latus rectum
     std::pair<int, int> foci(const int& f1, const int& f2);

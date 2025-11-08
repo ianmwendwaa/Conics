@@ -5,10 +5,18 @@
 #include <sstream>
 
 Parabola::Parabola() {
-    formattedStr = fmtEquation();// formatted equation to be used in all functions for arithmetics
+    formattedStr = inputAndFormatEqtn();// formatted equation to be used in all functions for arithmetics
+
+    if(formattedStr.empty()){
+        std::cerr << "ERROR: No equation was input!\n";
+        exit(-1);
+    }
 
     //find an instance of '=' to split the equation into left and right sides
     eqPos = formattedStr.find("=");
+    if(eqPos == std::string::npos){
+        std::cerr << "ERROR: No '=' found.\n";
+    }
 
     // from the fmtEquation, assign the left and right sides for individual analysis and operations
     m_leftSide = formattedStr.substr(0, eqPos);
@@ -18,8 +26,8 @@ Parabola::Parabola() {
     firstChar = m_leftSide.at(0);
 }
 
-std::string Parabola::fmtEquation(){
-    std::string input;//stores value of input
+std::string Parabola::inputAndFormatEqtn(){
+    std::string input;
     std::string word;
     std::string spacelessStr;
 
@@ -33,60 +41,39 @@ std::string Parabola::fmtEquation(){
     return spacelessStr;
 }
 
-bool Parabola::isVertexAtO()
+bool Parabola::isVertexAtOrigin()
 {
-
     return vertexIsAtO;
 }
 
-bool Parabola::isXPositive(const char *rightSide)
+bool Parabola::isParabolaPositive(const std::string& right_side)
 {
-    if(*rightSide != '-'){
-        isUpward = true;
-    }else
-        isUpward = false;
-
-    return isUpward;
-}
-
-bool Parabola::isYPositive(const char *rightSide)
-{
-    if(*rightSide != '-'){
-        isRightward = true;
-    }else
-        isRightward = false;
-
-    return isRightward;
+    if(right_side.empty()) return false;
+    return (right_side.at(0) != '-');
 }
 
 void Parabola::analyseParabola()
 {
     //1. Ascertain the type of parabola and then apply the respective function
-    if(firstChar == 'x'){
+    if (firstChar == 'x' || (firstChar == '(' && m_leftSide.at(1) == 'x')) {
         xParabola();
-    }
-
-    if(firstChar == 'y'){
+    }else if(firstChar == 'y' || (firstChar == '(' && m_leftSide.at(1) == 'y')){
         yParabola();
-    }
-
-    if(firstChar == '('){
-        firstChar = m_leftSide.at(1);
-        // check if it is x or y
-        if(firstChar == 'x'){
-            xParabola();
-        }
-
-        if(firstChar == 'y'){
-            yParabola();
-        }
+    }else{
+        std::cerr << "Could not establish the axis orientation of the parabola. Please confirm correct equation input!\n";
+        return;
     }
 
     //2. Determine whether the vertex is at V(0,0) or V(h,k)
     //find the occurence of v to obtain the coordinates of the vertex
-    int vPos = formattedStr.find("v");
+    size_t vPos = formattedStr.find("v(");
 
-    std::string vStr = formattedStr.substr(vPos + 1);// to move right from 'v' i.e: '(h,k)'
+    if(vPos == std::string::npos){
+        std::cerr << "ERROR: Could not find vertex coordinates. Validate inputs V(h,k)\n";
+        return;
+    }
+
+    std::string vStr = formattedStr.substr(vPos + 2);// to move right from 'v' i.e: '(h,k)'
 
     // parse further to obtain first and second values from the coordinates v(h,k)
     int bPos = vStr.find("(");// occurrence of the first bracket
@@ -108,7 +95,7 @@ void Parabola::analyseParabola()
     }
 }
 
-int Parabola::p()
+int Parabola::calculateP()
 {
     if(m_rightSide.at(0) != '-'){
         m_p = std::atoi(&m_rightSide.at(0));
@@ -125,7 +112,7 @@ int Parabola::directrix()
 
 int Parabola::latusRectumLen()
 {
-    return 4 * p();
+    return 4 * calculateP();
 }
 
 std::pair<int, int> Parabola::foci(const int& f1, const int& f2)
@@ -135,7 +122,7 @@ std::pair<int, int> Parabola::foci(const int& f1, const int& f2)
 
 void Parabola::xParabola(){
     // checking if the first occurrence of char is not '-'
-    if(isXPositive(&m_rightSide.at(0))){
+    if(isParabolaPositive(m_rightSide)){
         //if so, parabola is oriented upwards applying
         std::cout << "Parabola is oriented upwards\n";
 
@@ -171,7 +158,7 @@ void Parabola::xParabola(){
 
         }else if(vertexIsAtO){
             //if it is at the origin,
-            f = foci(0, p());
+            f = foci(0, calculateP());
             std::cout << "Focus: ("<< f.first<<"," << f.second << ")\n";
         }
         else{
@@ -184,21 +171,21 @@ void Parabola::xParabola(){
 
     }else{
         std::cout << "Parabola is oriented downwards\n";
-        f = foci(0, -p());
+        f = foci(0, -calculateP());
         std::cout << "Focus: ("<< f.first<<"," << f.second << ")\n";
     }
 }
 
 void Parabola::yParabola(){
-    if(isYPositive(&m_rightSide.at(0))){
+    if(isParabolaPositive(m_rightSide)){
         std::cout << "Parabola is oriented rightwards\n";
 
         // Focus will now be equal to F(±p, 0)
-        f = foci(p(), 0);
+        f = foci(calculateP(), 0);
         std::cout << "Focus: ("<< f.first<<"," << f.second << ")\n";
     }else{
         std::cout << "Parabola is oriented leftwards\n";
-        f = foci(-p(), 0);
+        f = foci(-calculateP(), 0);
         std::cout << "Focus: ("<< f.first<<"," << f.second << ")\n";
     }
 }
@@ -221,7 +208,7 @@ void Parabola::drawParabola()
 }
 
 int Parabola::startEngine(){
-    fmtEquation();
+    analyseParabola();
     return 0;
 }
 
