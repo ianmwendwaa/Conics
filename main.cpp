@@ -1,5 +1,6 @@
 // #include <tester.h>
 
+#include <any>
 #include <iostream>
 #include <regex>
 #include <string>
@@ -21,35 +22,49 @@ int main(){
             exit(-1);
         }
 
+        // Convert input to lower string
+        std::transform(spacelessStr.begin(), spacelessStr.end(),spacelessStr.begin(),
+            [](unsigned char c) {
+                return std::tolower(c);
+            });
+
         // List of all keywords, which may help tell the program what to do.
-        std::vector<std::string> queryKeyWords = {"determine","compute","find",
+        std::vector<std::string> queryKeyWords = {"find",
             "equation","radius","r","centre"};
 
+        for (const auto& keyWord : queryKeyWords) {
 
-        size_t endPointsCoordinatesPositionBracket1 = spacelessStr.find('(');
-        size_t endPointsCoordinatesPositionBracket2 = spacelessStr.find(')');
-
-        if (endPointsCoordinatesPositionBracket1 == std::string::npos && endPointsCoordinatesPositionBracket2 == std::string::npos) {
-            // No brackets found, so no endpoints provided. If so, look for another possible query by the user
         }
+
+
+        const size_t endPointsCoordinatesPositionBracket1 = spacelessStr.find('(');
+        const size_t endPointsCoordinatesPositionBracket2 = spacelessStr.find(')');
 
         // Obtain the value of the radius (if provided)
-        // for (const auto& keyWord: queryKeyWords) {
-        //     if (spacelessStr.find(keyWord))
-        // }
         size_t radiusPosition= spacelessStr.find('r');
-        if (radiusPosition == std::string::npos) {
-            throw std::exception();
-        }
+
         // Obtain the coordinates in the format (h,k)
         std::string endPointsCoordinatesStr = spacelessStr.substr(endPointsCoordinatesPositionBracket1, (endPointsCoordinatesPositionBracket2-endPointsCoordinatesPositionBracket1)+1);
 
         // Find the comma separator, to separate the values of h and k
         size_t commaSeparatorPosition = spacelessStr.find(',');
 
-        if (commaSeparatorPosition == std::string::npos) {
-            std::cerr << "Error parsing question provided. (Potentially ascertain integrity of the centre coordinates.";
-            exit(-1);
+        if (endPointsCoordinatesPositionBracket1 == std::string::npos ||
+            endPointsCoordinatesPositionBracket2 == std::string::npos ||
+            radiusPosition == std::string::npos ||
+            commaSeparatorPosition == std::string::npos) {
+            // No brackets found, so no endpoints provided. If so, look for another possible query by the user
+            std::cerr << "Error parsing query! Missing information from the user.";
+            throw std::exception();
+        }
+
+        const bool keyTermFound = std::any_of(queryKeyWords.begin(), queryKeyWords.end(),
+            [&](const std::string& keyWord) {
+            return spacelessStr.find(keyWord) != std::string::npos;
+        });
+
+        if (keyTermFound) {
+            std::cout << "Query keyword found!";
         }
 
         std::string aStr = spacelessStr.substr(endPointsCoordinatesPositionBracket1+1, (commaSeparatorPosition - endPointsCoordinatesPositionBracket1)-1);
@@ -64,12 +79,13 @@ int main(){
 
         // Represent in the form (x-a)2 + (y-b)2
         auto formatBracket = [](char variable, double value) {
+            std::stringstream ss;
             if (value == 0) return std::string(1, variable);
 
             return "(" + std::string(1, variable) + (value < 0 ? "+": "-" ) + std::to_string(std::abs(variable)) + ")2";
         };
 
-        std::cout << "Equation would be represented by: "<< formatBracket('x', a) << formatBracket('y', b) << "= r2";
+        std::cout << "Equation would be represented by: "<< formatBracket('x', a) << "+" << formatBracket('y', b) << "= r2";
     }
 
     // // y = a(x-h)2 + k

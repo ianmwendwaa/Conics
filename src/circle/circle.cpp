@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 #include <regex>
-#include <math.h>
 Circle::Circle() {
     int a{},b{},r{};
 
@@ -72,3 +71,21 @@ Circle::Circle() {
         }
     }
 }
+
+std::string Circle::inputAndFormatQuery() {
+    // Obtain the question from the user
+    if (std::string input; std::getline(std::cin, input)) {
+        std::string word;
+        std::istringstream iss;
+        while (iss >> word) {
+            formattedQuery += word;
+        }
+    }
+    // Convert to lowercase
+    std::transform(formattedQuery.begin(), formattedQuery.end(), formattedQuery.begin(),
+        [](unsigned char c) {
+            return std::tolower(c);
+        });
+    return formattedQuery;
+}
+
