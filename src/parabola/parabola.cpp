@@ -27,7 +27,6 @@ Parabola::Parabola() {
 
     std::smatch matches;
     if (std::regex_match(formattedStr, matches, conicRgx)) {
-
         // if matches the vertical parabola
         if (matches[1].matched) {
             const int h = std::stoi(matches[1].str());
@@ -49,7 +48,6 @@ Parabola::Parabola() {
             }
         }
     }
-
 }
 
 std::string Parabola::inputAndFormatEquation(){
@@ -65,4 +63,15 @@ std::string Parabola::inputAndFormatEquation(){
     }
     return spacelessStr;
 }
+
+int main() {
+    std::map<char, std::string> binaryMap;
+    binaryMap['A'] = "";
+    if (constexpr char input = 'A'; binaryMap.count(input)) {
+        std::cout << "Key found!";
+    }else {
+        std::cerr << "Element not found!";
+    }
+}
+
 
