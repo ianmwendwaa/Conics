@@ -1,5 +1,6 @@
 #include "circle.h"
 
+#include <cmath>
 #include <filesystem>
 #include <iostream>
 #include <sstream>
@@ -31,44 +32,50 @@ Circle::Circle() {
         std::vector<std::string> queryKeyWords = {"determine","compute","find",
             "equation","radius","centre"};
 
-        int endPointsCoordinatesPositionBracket1 = spacelessStr.find('(');
-        int endPointsCoordinatesPositionBracket2 = spacelessStr.find(')');
+        // Find occurrence of the brackets and comma, to extract coordinates of the centre
+        size_t endPointsCoordinatesPositionBracket1 = spacelessStr.find('(');
+        size_t endPointsCoordinatesPositionBracket2 = spacelessStr.find(')');
+        size_t commaSeparatorPosition = spacelessStr.find(',');
 
         if (endPointsCoordinatesPositionBracket1 == std::string::npos && endPointsCoordinatesPositionBracket2 == std::string::npos) {
             // No brackets found, so no endpoints provided. If so, look for another possible query by the user
         }
 
         std::string endPointsCoordinatesStr = spacelessStr.substr(endPointsCoordinatesPositionBracket1, endPointsCoordinatesPositionBracket2);
+        std::string aStr = spacelessStr.substr(endPointsCoordinatesPositionBracket1+1, (commaSeparatorPosition-endPointsCoordinatesPositionBracket1)-1);
+        std::string bStr = spacelessStr.substr(commaSeparatorPosition+1, (endPointsCoordinatesPositionBracket2 - commaSeparatorPosition)-1);
 
-        std::cout << endPointsCoordinatesStr;
-        // (x-a)2+(y-b)2=r2
-        const std::regex rgx(R"(\(x([+-]\d+)\)2\+\(y([+-]\d+)\)2=(\d+))");
+        double a = std::stod(aStr);
+        double b = std::stod(bStr);
+        double r = 0;
 
-        std::smatch matches;
-        if (std::regex_match(spacelessStr, matches, rgx)) {
-            std::cout << "Equation matches the format provided!";
+        // Print the simple equation in the form (x-a)2 + (y-b)2 = r2
+        auto formatUnexpandedEquation = [](char variable, double value) {
+            std::stringstream ss;
+            if (value == 0) return std::string(1, variable) + "2";
 
-            std::string strA = matches[1].str();
-            std::string strB = matches[2].str();
-            std::string strR = matches[3].str();
+            ss << "(" << std::string(1, variable) << (value > 0 ? "+":"-")<< std::abs(value) << ")2";
+            return ss.str();
+        };
 
-            a = std::stoi(strA);
-            b = std::stoi(strB);
-            r = std::stoi(strR);
+        // Expanded equation resembles: x2 + y2 + Dx + Ey + F = 0, where, D=-2*a, E=-2*b and F=a2+b2-r2
+        double D = -2 * a;
+        double E = -2 * b;
+        double F = (std::pow(a, 2)+std::pow(b, 2) - std::pow(r, 2));
+        auto formatExpandedEquation = [&] {
+            std::stringstream ss;
+            ss << "x2+y2";
+            if (D != 0) ss << (D > 0 ? "+": "-") << std::abs(D) << "x";
+            if (E != 0) ss << (E > 0 ? "+": "-") << std::abs(E) << "y";
+            if (F != 0) ss << (E > 0 ? "+": "-") << std::abs(F);
+            ss << "= 0";
+            return ss.str();
+        };
 
-            //x(x-a) - a(x-a)->x2 - ax -ax + a2
-            //x(x+a) + a(x+a)-> x2  + ax + ax + a2
+        std::cout << "Unexpanded equation is: " << formatUnexpandedEquation('x', a) <<
+            formatUnexpandedEquation('y', b) << "=" << std::pow(r, 2);
 
-            //y(y-b) - b(y-b)->y2 - by - by + b2
-            if (a > 0 && b > 0) {
-                std::cout <<
-                    "The equation of the circle is: x2 - "<< a+a<<"x"+ a*a;
-            }
-        }else{
-            std::cerr <<
-                    "Unresolved circle equation syntax provided! Confirm the syntax follows the form:(x-a)2+(y-b)2=r2";
-            exit(-1);
-        }
+        std::cout << "Expanded equation is: " << formatExpandedEquation();
     }
 }
 
@@ -81,7 +88,7 @@ std::string Circle::inputAndFormatQuery() {
             formattedQuery += word;
         }
     }
-    // Convert to lowercase
+    // Convert query to lowercase
     std::transform(formattedQuery.begin(), formattedQuery.end(), formattedQuery.begin(),
         [](unsigned char c) {
             return std::tolower(c);
