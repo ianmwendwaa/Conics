@@ -6,9 +6,18 @@ class Circle
 {
 public:
     Circle();
+
+    enum class QueryType {
+        FIND_EQUATION, FIND_INTERSECTION, FIND_CENTRE, FIND_RADIUS_LENGTH,
+        FIND_AREA_CIRCUMFERENCE, FIND_CONGRUENCE_RATIO, FIND_RADIUS_INNER_OUTER_CIRCLES,
+        UNKNOWN
+    };
     std::string inputAndFormatQuery();
+    static QueryType findUserIntent(const std::string& query);
+    bool parseUserQuery(const std::string& query);
 private:
     std::string formattedQuery;
+    double a{},b{},c{},r{};
 };
 
 #endif // CIRCLE_H
