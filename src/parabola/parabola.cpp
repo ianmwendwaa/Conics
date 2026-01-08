@@ -64,14 +64,14 @@ std::string Parabola::inputAndFormatEquation(){
     return spacelessStr;
 }
 
-int main() {
-    std::map<char, std::string> binaryMap;
-    binaryMap['A'] = "";
-    if (constexpr char input = 'A'; binaryMap.count(input)) {
-        std::cout << "Key found!";
-    }else {
-        std::cerr << "Element not found!";
-    }
-}
+// int main() {
+//     std::map<char, std::string> binaryMap;
+//     binaryMap['A'] = "";
+//     if (constexpr char input = 'A'; binaryMap.count(input)) {
+//         std::cout << "Key found!";
+//     }else {
+//         std::cerr << "Element not found!";
+//     }
+// }
 
 

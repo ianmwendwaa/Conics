@@ -1,5 +1,0 @@
-
-void Menu::conics()
-{
-
-}

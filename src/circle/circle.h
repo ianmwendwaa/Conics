@@ -12,7 +12,6 @@ public:
         FIND_AREA_CIRCUMFERENCE, FIND_CONGRUENCE_RATIO, FIND_RADIUS_INNER_OUTER_CIRCLES,
         UNKNOWN
     };
-    std::string inputAndFormatQuery();
     static QueryType findUserIntent(const std::string& query);
     bool parseUserQuery(const std::string& query);
 private:

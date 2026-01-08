@@ -9,8 +9,6 @@ qt_add_executable(Conics
     main.cpp
     src/parabola/parabola.h src/parabola/parabola.cpp
     src/hyperbola/hyperbola.h src/hyperbola/hyperbola.cpp
-    menu/menu.cpp
-    tester.h tester.cpp
     src/circle/circle.h src/circle/circle.cpp
 )
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
