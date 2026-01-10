@@ -30,16 +30,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="268b3ceb-81ff-4a9a-aa63-4828ab68ad6b" name="Changes" comment="progress">
+      <change afterPath="$PROJECT_DIR$/src/engine/queryengine.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/engine/queryengine.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/.idea/menu.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/Menu.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/menu.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/circle/circle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/circle/circle.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/circle/circle.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/circle/circle.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/parabola/parabola.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/parabola/parabola.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,6 +108,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="g++" />
+    </option>
+  </component>
   <component name="RunManager" selected="CMake Application.Conics">
     <configuration name="Conics" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
@@ -164,7 +163,11 @@
       <workItem from="1767860821890" duration="4586000" />
       <workItem from="1767893612779" duration="334000" />
       <workItem from="1767893982406" duration="1123000" />
-      <workItem from="1767895144683" duration="212000" />
+      <workItem from="1767895144683" duration="904000" />
+      <workItem from="1768044284453" duration="707000" />
+      <workItem from="1768067138855" duration="177000" />
+      <workItem from="1768067358579" duration="1651000" />
+      <workItem from="1768069069991" duration="1063000" />
     </task>
     <task id="LOCAL-00001" summary="progress">
       <option name="closed" value="true" />

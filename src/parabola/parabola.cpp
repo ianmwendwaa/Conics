@@ -50,28 +50,3 @@ Parabola::Parabola() {
     }
 }
 
-std::string Parabola::inputAndFormatEquation(){
-    std::string spacelessStr;
-
-    std::cout << "Input equation of the parabola: ";
-    if(std::string input; std::getline(std::cin, input)){
-        std::string word;
-        std::istringstream stream(input);
-        while(stream >> word){
-            spacelessStr += word;
-        }
-    }
-    return spacelessStr;
-}
-
-// int main() {
-//     std::map<char, std::string> binaryMap;
-//     binaryMap['A'] = "";
-//     if (constexpr char input = 'A'; binaryMap.count(input)) {
-//         std::cout << "Key found!";
-//     }else {
-//         std::cerr << "Element not found!";
-//     }
-// }
-
-

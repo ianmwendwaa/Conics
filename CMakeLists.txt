@@ -10,6 +10,7 @@ qt_add_executable(Conics
     src/parabola/parabola.h src/parabola/parabola.cpp
     src/hyperbola/hyperbola.h src/hyperbola/hyperbola.cpp
     src/circle/circle.h src/circle/circle.cpp
+    src/engine/queryengine.h src/engine/queryengine.cpp
 )
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(Conics
