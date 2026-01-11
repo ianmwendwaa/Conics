@@ -1,9 +1,10 @@
 #include <iostream>
 #include "src/circle/circle.h"
+#include "src/engine/queryengine.h"
+
 int main() {
-    Circle circle;
+    QueryEngine queryEngine;
     std::string query;
-    std::cout << "input equation: ";
     std::cin >> query;
-    circle.parseUserQuery(query);
+    queryEngine.parseUserQuery(query);
 }

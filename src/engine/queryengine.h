@@ -16,7 +16,7 @@ private:
     Circle* circle;
     Parabola* parabola;
     Hyperbola* hyperbola;
-    bool operationFound;
+    bool operationFound = false;
 };
 
 #endif // QUERYENGINE_H
