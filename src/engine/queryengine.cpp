@@ -2,16 +2,15 @@
 #include <algorithm>
 #include <string>
 #include <iostream>
+#include <map>
 
 QueryEngine::QueryEngine() {
-    circle = new Circle;
-    parabola = new Parabola;
-    hyperbola = new Hyperbola;
+    circle = std::make_unique<Circle>();
+    parabola = std::make_unique<Parabola>();
+    hyperbola = std::make_unique<Hyperbola>();
 }
 
-
-
-bool QueryEngine::parseUserQuery(const std::string& query) {
+QueryEngine::QueryType QueryEngine::parseUserQuery(const std::string& query) {
     // Clean and normalize the query
     std::string cleanQuery = query;
     cleanQuery.erase(std::ranges::remove(cleanQuery, ' ').begin(), cleanQuery.end());
@@ -19,7 +18,14 @@ bool QueryEngine::parseUserQuery(const std::string& query) {
     const bool takeCircleRoadMap = cleanQuery.find("circle") != std::string::npos;
     const bool takeParabolaRoadMap = cleanQuery.find("parabola") != std::string::npos;
     const bool takeHyperbolaRoadMap = cleanQuery.find("hyperbola") != std::string::npos;
-    const bool takeEllipseRoadMap = cleanQuery.find("ellipse") != std::string::npos;
+    const bool takeEllipseRoadMap = cleanQuery.find("ellipse");
+
+    // Map each keyword with its respective engine
+    static std::map<std::string, QueryType> queryTypes = {
+        {"circle",QueryType::CIRCLE_ENGINE},
+            {"parabola", QueryType::PARABOLA_ENGINE},
+            {"hyperbola", QueryType::HYPERBOLA_ENGINE}
+        };
 
     // Invoke the respective engine parsers to help ascertain the operation to be done, and expected results
     if(takeCircleRoadMap){
@@ -46,12 +52,28 @@ bool QueryEngine::parseUserQuery(const std::string& query) {
         std::cerr << "Could not ascertain the query intent!";
         exit(-1);
     }
-    return operationFound;
+    return QueryType::UNKNOWN;
 }
 
-QueryEngine::~QueryEngine()
-{
-    delete circle;
-    delete parabola;
-    delete hyperbola;
+QueryEngine::QueryType QueryEngine::ascertainQueryType(const std::string& query) {
+    static std::map<std::string, QueryType> queryTypes = {{"circle", QueryType::CIRCLE_ENGINE},
+    {"parabola", QueryType::PARABOLA_ENGINE},
+    {"hyperbola", QueryType::HYPERBOLA_ENGINE}};
+
+    auto cmd = queryTypes.find(query);
+    if (cmd == queryTypes.end()) {
+        std::cerr << "Query type not found!";
+        // }
+        // switch (cmd) {
+        //     case QueryType::CIRCLE_ENGINE:
+        //
+        //
+        //     default: ;
+        // }
+        return QueryType::UNKNOWN;
+    }
 }
+
+
+QueryEngine::~QueryEngine()
+= default;
