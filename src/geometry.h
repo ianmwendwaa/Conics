@@ -13,9 +13,13 @@ public:
     Geometry();
     ~Geometry();
     std::pair<double, double> QuadraticRoots(const std::string& query);
+    void VertexQuadraticForm();
+
 private:
     double a{};
     double b{};
     double c{};
+    double inner_surd{};
+    double outer_surd{};
 };
 #endif //GEOMETRY_H
