@@ -10,14 +10,16 @@ struct QuadraticPattern {
     std::regex pattern;
     std::string name;// is it linear, quadratic...etc
 };
+
 class Geometry {
 
 public:
     Geometry();
     ~Geometry();
-    std::pair<double, double> QuadraticRoots(const std::string& query);
+    void QuadraticRoots(const std::string& query);
     void VertexQuadraticForm();
     void CompareAndSolveEquation();
+    double FindSurdExpression(double& d);
 
 private:
     double a{};
@@ -25,6 +27,6 @@ private:
     double c{};
     double inner_surd{};
     double outer_surd{};
-    double a_v{}, b_v{};
+    double a_v{}, b_v{};// variables for the vertex form (x+a)2 + b
 };
 #endif //GEOMETRY_H

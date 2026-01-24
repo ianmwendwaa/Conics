@@ -7,39 +7,28 @@
 
 Geometry::Geometry() = default;
 
-inline auto findSimplestSurd = [](const int& d) {
-    // First check if the number is a prime number. If so, leave it untouched
-    bool is_prime{};
-    double result = 0;
-
-    for (size_t i = 2; i <= std::sqrt(d); i++) {
-        if (std::fmod(d, i) != 0) {
-            is_prime = true;
-            break;
-        }
-    }
-    if (is_prime) return d;
-
-    // To find the surd, find the greatest perfect square. It should be less than the provided number
-    double gps = 0;// greatest perfect square
-
-    // Vector to store the values found
-    std::vector<int> surdValues;
-    for (size_t i = d; i > 0; i--) {
-        if (std::sqrt(i) == d) {
-            surdValues.emplace_back(i);
-        }
-    }
-};
 inline bool isPerfectSquare(long long d) {
     if (d <= 0) return false;// Cannot find square root of 0 or negative numbers
+    const long long sqr = std::sqrt(d);
 
-    if (std::sqrt(d) != d) return false;// Square root is not equal to provided number
-
-    return true;// If both are false, d is a perfect square
-
+    return (sqr * sqr == d);
 }
-std::pair<double, double> Geometry::QuadraticRoots(const std::string& query) {
+
+inline bool isPrime(double d) {
+    double result = 0;
+    int div_counter = 0;
+
+    for (size_t i = 2; i <= std::sqrt(d); i++) {
+        if (std::fmod(d, i) == 0) {
+            div_counter++;
+        }
+    }
+    if (div_counter > 0) return false;// Meaning more than one divisor has been found
+
+    return true;
+}
+
+void Geometry::QuadraticRoots(const std::string& query) {
     std::string cleanQuery = query;
     cleanQuery.erase(std::ranges::remove(cleanQuery, ' ').begin(), cleanQuery.end());
     std::ranges::transform(cleanQuery, cleanQuery.begin(), ::tolower);
@@ -106,8 +95,6 @@ std::pair<double, double> Geometry::QuadraticRoots(const std::string& query) {
     }
     VertexQuadraticForm();
     CompareAndSolveEquation();
-
-    return std::make_pair(1.0, 1.0);
 }
 
 void Geometry::VertexQuadraticForm() {
@@ -134,14 +121,67 @@ void Geometry::CompareAndSolveEquation(){
         this->b_v = std::abs(this->b_v);// make it positive
     else
         this->b_v = -(this->b_v);// negate it
+
     /* Next, find its square root. If it is negative, display it as an imaginary number. If it is a perfect square, find
-     * the square root. If not a perfect square, display it as the simplest surd
+     * the square root. If not a perfect square, express it as its simplest surd
      */
     if (!isPerfectSquare(this->b_v)) {
         std::cout << this->b_v << " is not a perfect square. Invoking surd func...\n";
-    }else {
+        FindSurdExpression(this->b_v);
+    }else
         std::cout << this->b_v << " is a perfect square";
+
+    // Contort results-> x = ±a ± surd. Simulate conversion of a_v's sign
+    if (this->a_v < 0) {
+        this->a_v = std::abs(this->a_v);
+    }else {
+        this->a_v = -(this->a_v);
     }
+
+    std::cout << "Value of x given that f(x) is equal to 0: x = " << (this->a_v > 0 ? "":"-") << std::abs(this->a_v) <<
+        (this->b_v > 0 ? "+":"-") << "sqrt(" <<std::abs(this->b_v) << ")\n";
+
+
+}
+double Geometry::FindSurdExpression(double& d) {
+    // First check if the number is positive
+    if (d < 0) return d;
+    // if (d == 0) return 0;
+
+    // Then, check if the number is a prime number. If so, leave it untouched
+    if (!isPrime(d)) return d;
+
+    // To find the surd, find the greatest perfect square. It should be less than the provided number
+    double gps = 0;// greatest perfect square
+
+    if (!isPerfectSquare(d)) return d;// Forward the value of d untouched
+
+    double result = 0;
+
+    std::vector<double> multiples;
+
+    // All tests failed, so d must not be a prime number and is a perfect square. So, obtain the greatest square
+    for (int i = 0; i < d; i++) {
+        for (int j = 2; j < d; j++) {
+            if (isPrime(j) && isPerfectSquare(i)) {
+                result = i * j;
+                if (result == d) {
+                    multiples.emplace_back(i);
+                    multiples.emplace_back(j);
+                }
+            };
+        }
+    }
+
+    double squareOSrd = 0;// stores the raw squared outer surd
+
+    squareOSrd = *std::max_element(multiples.begin(), multiples.end());
+
+    this->outer_surd = std::sqrt(squareOSrd);
+
+    std::cout << this->outer_surd << "sqrt(" << multiples.at(1) <<")";
+
+    return 0.0;
 }
 
 
