@@ -4,13 +4,16 @@
 #include <regex>
 #include <cmath>
 #include <iostream>
+#include <filesystem>
+#include <fstream>
+
+namespace fs = std::filesystem;
 
 Geometry::Geometry() = default;
 
-inline bool isPerfectSquare(long long d) {
+inline bool isPerfectSquare(double d) {
     if (d <= 0) return false;// Cannot find square root of 0 or negative numbers
     const long long sqr = std::sqrt(d);
-
     return (sqr * sqr == d);
 }
 
@@ -18,7 +21,7 @@ inline bool isPrime(double d) {
     double result = 0;
     int div_counter = 0;
 
-    for (size_t i = 2; i <= std::sqrt(d); i++) {
+    for (int i = 2; i <= std::sqrt(d); i++) {
         if (std::fmod(d, i) == 0) {
             div_counter++;
         }
@@ -95,6 +98,7 @@ void Geometry::QuadraticRoots(const std::string& query) {
     }
     VertexQuadraticForm();
     CompareAndSolveEquation();
+    WriteDataResults();
 }
 
 void Geometry::VertexQuadraticForm() {
@@ -175,7 +179,11 @@ double Geometry::FindSurdExpression(double& d) {
 
     double squareOSrd = 0;// stores the raw squared outer surd
 
-    squareOSrd = *std::max_element(multiples.begin(), multiples.end());
+    for (const auto& it: multiples) {
+        if (isPerfectSquare(it)) {
+            squareOSrd = it;
+        }
+    }
 
     this->outer_surd = std::sqrt(squareOSrd);
 
@@ -184,6 +192,28 @@ double Geometry::FindSurdExpression(double& d) {
     return 0.0;
 }
 
+void Geometry::WriteDataResults() const {
+    fs::path directory = "C:\\Math\\Conics";
+    if (!fs::exists(directory) && fs::is_directory(directory)) {
+        std::cerr << directory << " does not exist. Creating it...";
+        fs::create_directory(directory);
+    }
+    // Define the file name to write the obtained data into
+    fs::path fileName = directory / "geometry.txt";
+
+    std::ofstream file(fileName);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file " << fileName;
+    }
+    file << "Geometry analysis data: \n" <<
+        "a: "<< this->a <<"\n"
+        "b: " << this->b << "\n"
+        "c: " << this->c << "\n"
+        "a_v: "<< this->a_v << "\n"
+        "b_v: "<< this->b_v << "\n";
+    std::cout << fileName << " created and saved successfully!";
+    file.close();
+}
 
 Geometry::~Geometry() = default;
 

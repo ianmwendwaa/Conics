@@ -1,0 +1,6 @@
+Geometry analysis data: 
+a: 1
+b: -4
+c: -16
+a_v: 2
+b_v: 20

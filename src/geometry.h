@@ -17,9 +17,6 @@ public:
     Geometry();
     ~Geometry();
     void QuadraticRoots(const std::string& query);
-    void VertexQuadraticForm();
-    void CompareAndSolveEquation();
-    double FindSurdExpression(double& d);
 
 private:
     double a{};
@@ -28,5 +25,10 @@ private:
     double inner_surd{};
     double outer_surd{};
     double a_v{}, b_v{};// variables for the vertex form (x+a)2 + b
+
+    void VertexQuadraticForm();
+    void CompareAndSolveEquation();
+    double FindSurdExpression(double& d);
+    void WriteDataResults() const;
 };
 #endif //GEOMETRY_H
