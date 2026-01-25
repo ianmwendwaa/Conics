@@ -1,19 +1,18 @@
 #include "geometry.h"
+#include "core.h"
 
 #include <algorithm>
 #include <regex>
 #include <cmath>
 #include <iostream>
-#include <filesystem>
-#include <fstream>
 
-namespace fs = std::filesystem;
-
-Geometry::Geometry() = default;
+Geometry::Geometry() {
+    core = std::make_unique<Core>();
+};
 
 inline bool isPerfectSquare(double d) {
     if (d <= 0) return false;// Cannot find square root of 0 or negative numbers
-    const long long sqr = std::sqrt(d);
+    const double sqr = std::sqrt(d);
     return (sqr * sqr == d);
 }
 
@@ -98,7 +97,12 @@ void Geometry::QuadraticRoots(const std::string& query) {
     }
     VertexQuadraticForm();
     CompareAndSolveEquation();
-    WriteDataResults();
+    core->WriteDataResults("geometry.txt",
+        "a: ",this->a,
+        "b: ",this->b,
+        "c: ",this->c,
+        "a_v: ",this->a_v,
+        "b_v: ",this->b_v);
 }
 
 void Geometry::VertexQuadraticForm() {
@@ -131,7 +135,7 @@ void Geometry::CompareAndSolveEquation(){
      */
     if (!isPerfectSquare(this->b_v)) {
         std::cout << this->b_v << " is not a perfect square. Invoking surd func...\n";
-        FindSurdExpression(this->b_v);
+        std::cout << FindSurdExpression(this->b_v);
     }else
         std::cout << this->b_v << " is a perfect square";
 
@@ -142,8 +146,7 @@ void Geometry::CompareAndSolveEquation(){
         this->a_v = -(this->a_v);
     }
 
-    std::cout << "Value of x given that f(x) is equal to 0: x = " << (this->a_v > 0 ? "":"-") << std::abs(this->a_v) <<
-        (this->b_v > 0 ? "+":"-") << "sqrt(" <<std::abs(this->b_v) << ")\n";
+    FindSurdExpression(this->b_v);
 
 
 }
@@ -153,12 +156,11 @@ double Geometry::FindSurdExpression(double& d) {
     // if (d == 0) return 0;
 
     // Then, check if the number is a prime number. If so, leave it untouched
-    if (!isPrime(d)) return d;
+    if (isPrime(d)) return d;
 
-    // To find the surd, find the greatest perfect square. It should be less than the provided number
-    double gps = 0;// greatest perfect square
-
-    if (!isPerfectSquare(d)) return d;// Forward the value of d untouched
+    // If the number is a perfect square, no need to find its surd. So return its square root
+    if (isPerfectSquare(d))
+        return sqrt(d);
 
     double result = 0;
 
@@ -187,32 +189,9 @@ double Geometry::FindSurdExpression(double& d) {
 
     this->outer_surd = std::sqrt(squareOSrd);
 
-    std::cout << this->outer_surd << "sqrt(" << multiples.at(1) <<")";
+    std::cout << "Values of x in surd form, given that f(x) = 0: "<< this->outer_surd << "± sqrt(" << multiples.at(1) <<")\n";
 
     return 0.0;
-}
-
-void Geometry::WriteDataResults() const {
-    fs::path directory = "C:\\Math\\Conics";
-    if (!fs::exists(directory) && fs::is_directory(directory)) {
-        std::cerr << directory << " does not exist. Creating it...";
-        fs::create_directory(directory);
-    }
-    // Define the file name to write the obtained data into
-    fs::path fileName = directory / "geometry.txt";
-
-    std::ofstream file(fileName);
-    if (!file.is_open()) {
-        std::cerr << "Error opening file " << fileName;
-    }
-    file << "Geometry analysis data: \n" <<
-        "a: "<< this->a <<"\n"
-        "b: " << this->b << "\n"
-        "c: " << this->c << "\n"
-        "a_v: "<< this->a_v << "\n"
-        "b_v: "<< this->b_v << "\n";
-    std::cout << fileName << " created and saved successfully!";
-    file.close();
 }
 
 Geometry::~Geometry() = default;

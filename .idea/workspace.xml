@@ -30,10 +30,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="52150378-6ea9-414d-9ef5-39073f4b53b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/open_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Conics.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Conics.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry.txt" beforeDir="false" afterPath="$PROJECT_DIR$/geometry.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/circle/circle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/circle/circle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/circle/circle.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/circle/circle.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/geometry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometry.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/geometry.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometry.h" afterDir="false" />
     </list>
@@ -238,7 +242,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.open_file">
+  <component name="RunManager" selected="CMake Application.Conics">
     <configuration name="Conics" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Conics" TARGET_NAME="Conics" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Conics" RUN_TARGET_NAME="Conics">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -319,7 +323,7 @@
       <workItem from="1769167641120" duration="36611000" />
       <workItem from="1769334587229" duration="357000" />
       <workItem from="1769334996572" duration="713000" />
-      <workItem from="1769336233824" duration="2644000" />
+      <workItem from="1769336233824" duration="11695000" />
     </task>
     <servers />
   </component>
@@ -336,8 +340,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/geometry.cpp</url>
-          <line>172</line>
-          <option name="timeStamp" value="9" />
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

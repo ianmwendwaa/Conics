@@ -9,5 +9,8 @@ add_executable(Conics main.cpp
         src/parabola/parabola.cpp src/parabola/parabola.h
         src/geometry.cpp
         src/geometry.h
+        src/core.cpp
+        src/core.h
 )
+include_directories("C:/Python313/include")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})

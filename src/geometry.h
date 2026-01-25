@@ -4,6 +4,8 @@
 #include <regex>
 #include <string>
 #include <utility>
+
+#include "core.h"
 #pragma once
 
 struct QuadraticPattern {
@@ -16,6 +18,7 @@ class Geometry {
 public:
     Geometry();
     ~Geometry();
+    std::unique_ptr<Core>core;
     void QuadraticRoots(const std::string& query);
 
 private:
@@ -29,6 +32,5 @@ private:
     void VertexQuadraticForm();
     void CompareAndSolveEquation();
     double FindSurdExpression(double& d);
-    void WriteDataResults() const;
 };
 #endif //GEOMETRY_H

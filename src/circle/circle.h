@@ -12,11 +12,12 @@ public:
         FIND_AREA_CIRCUMFERENCE, FIND_CONGRUENCE_RATIO, FIND_RADIUS_INNER_OUTER_CIRCLES,
         UNKNOWN
     };
-    static QueryType findUserIntent(const std::string& query);
-    bool parseUserQuery(const std::string& query);
+    // static QueryType findUserIntent(const std::string& query);
+    // bool parseUserQuery(const std::string& query);
+    void AnalyzeCircleEquation(const std::string& query);
 private:
-    std::string formattedQuery;
-    double a{},b{},c{},r{};
+    // Variables for the general form:
+    double x_g{}, y_g{}, tg_g{}, tf_g{}, c_g{};
 };
 
 #endif // CIRCLE_H
