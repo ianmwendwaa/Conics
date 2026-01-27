@@ -14,9 +14,11 @@ namespace Circle
         FIND_AREA_CIRCUMFERENCE, FIND_CONGRUENCE_RATIO, FIND_RADIUS_INNER_OUTER_CIRCLES,
         UNKNOWN
     };
-    // static QueryType findUserIntent(const std::string& query);
-    // bool parseUserQuery(const std::string& query);
-    void ParseQuery(const std::string& query, EquationForm format);
+    void ParseQuery(const std::string& query, const std::regex& pattern, EquationForm format);
+    void GeneralForm(const std::string& query, const std::regex& pattern);
+    void StandardForm(const std::string& query, const std::regex& pattern);
+    void PolarForm(const std::string& query, const std::regex& pattern);
+    void ParametricForm(const std::string& query, const std::regex& pattern);
     // Variables for the general form:
 };
 

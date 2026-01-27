@@ -3,7 +3,6 @@
 #include <cmath>
 
 void Geometry::ParseQuery(const std::string &query, const std::regex& pattern, const EquationForm format) {
-    Geometry::geoQuery = query;
     EquationForm form = format;
     switch (form) {
         case EquationForm::STANDARD:
@@ -22,7 +21,7 @@ void Geometry::ParseQuery(const std::string &query, const std::regex& pattern, c
 }
 
 void Geometry::StandardFormEvaluator(const std::string &query, const std::regex& pattern) {
-    const auto d = new Geometry::Data;
+    const auto d = std::unique_ptr<Data>();
     if (std::smatch match; std::regex_match(query, match, pattern)) {
         d->a = std::stod(match[1].str());
         d->b = std::stod(match[2].str());
@@ -68,7 +67,6 @@ void Geometry::StandardFormEvaluator(const std::string &query, const std::regex&
         }
     }
 
-    delete d;
 }
 
 void Geometry::FactoredFormEvaluator(const std::string &query,const std::regex& pattern) {

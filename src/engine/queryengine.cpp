@@ -18,7 +18,7 @@ void QueryEngine::AscertainQueryType(const std::string &query) {
                     Geometry::ParseQuery(cleanQuery, patternEntry.queryRgx, patternEntry.eqFmt);
                     break;
                 case QueryType::CIRCLE_ENGINE:
-                    Circle::ParseQuery(cleanQuery, patternEntry.eqFmt);
+                    Circle::ParseQuery(cleanQuery, patternEntry.queryRgx, patternEntry.eqFmt);
                     break;
                 default:
                     std::cerr << "Could not process query syntax. Consider revising your input.";
