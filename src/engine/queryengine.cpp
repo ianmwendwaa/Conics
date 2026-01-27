@@ -1,79 +1,29 @@
 #include "queryengine.h"
-#include <algorithm>
-#include <string>
-#include <iostream>
-#include <map>
 
-QueryEngine::QueryEngine() {
-    circle = std::make_unique<Circle>();
-    parabola = std::make_unique<Parabola>();
-    hyperbola = std::make_unique<Hyperbola>();
-}
+#include <vector>
 
-QueryEngine::QueryType QueryEngine::parseUserQuery(const std::string& query) {
-    // Clean and normalize the query
-    std::string cleanQuery = query;
-    cleanQuery.erase(std::ranges::remove(cleanQuery, ' ').begin(), cleanQuery.end());
-    std::ranges::transform(cleanQuery, cleanQuery.begin(), ::tolower);
-    const bool takeCircleRoadMap = cleanQuery.find("circle") != std::string::npos;
-    const bool takeParabolaRoadMap = cleanQuery.find("parabola") != std::string::npos;
-    const bool takeHyperbolaRoadMap = cleanQuery.find("hyperbola") != std::string::npos;
-    const bool takeEllipseRoadMap = cleanQuery.find("ellipse");
+#include "src/geometry/geometry.h"
+#include "core/core.h"
+#include "types/types.h"
 
-    // Map each keyword with its respective engine
-    static std::map<std::string, QueryType> queryTypes = {
-        {"circle",QueryType::CIRCLE_ENGINE},
-            {"parabola", QueryType::PARABOLA_ENGINE},
-            {"hyperbola", QueryType::HYPERBOLA_ENGINE}
-        };
+void QueryEngine::AscertainQueryType(const std::string &query) {
+    const std::string cleanQuery = Core::NormalizeQuery(query);
+    QueryType queryType = QueryType::UNKNOWN;
 
-    // Invoke the respective engine parsers to help ascertain the operation to be done, and expected results
-    if(takeCircleRoadMap){
-        // Load circle parser
-        std::cout << "Circle data found!";
-        operationFound = true;
-    }
-    if(takeParabolaRoadMap){
-        // Load Parabola parser
-        std::cout << "Parabola data found!";
-        operationFound = true;
-    }
-    if(takeHyperbolaRoadMap){
-        // Load Hyperbola parser
-        std::cout << "Hyperbola data found!";
-        operationFound = true;
-    }
-    if(takeEllipseRoadMap){
-        // Load Hyperbola parser
-        std::cout << "Ellipse data found!";
-        operationFound = true;
-    }
-    if(!operationFound){
-        std::cerr << "Could not ascertain the query intent!";
-        exit(-1);
-    }
-    return QueryType::UNKNOWN;
-}
-
-QueryEngine::QueryType QueryEngine::ascertainQueryType(const std::string& query) {
-    static std::map<std::string, QueryType> queryTypes = {{"circle", QueryType::CIRCLE_ENGINE},
-    {"parabola", QueryType::PARABOLA_ENGINE},
-    {"hyperbola", QueryType::HYPERBOLA_ENGINE}};
-
-    auto cmd = queryTypes.find(query);
-    if (cmd == queryTypes.end()) {
-        std::cerr << "Query type not found!";
-        // }
-        // switch (cmd) {
-        //     case QueryType::CIRCLE_ENGINE:
-        //
-        //
-        //     default: ;
-        // }
-        return QueryType::UNKNOWN;
+    for (const auto& patternEntry: queryDecTree) {
+        if (std::smatch matches; std::regex_match(cleanQuery, matches, patternEntry.queryRgx)) {
+            queryType = patternEntry.type;
+            switch (queryType) {
+                case QueryType::GEOMETRY_ENGINE:
+                    Geometry::ParseQuery(cleanQuery, patternEntry.queryRgx, patternEntry.eqFmt);
+                    break;
+                case QueryType::CIRCLE_ENGINE:
+                    Circle::ParseQuery(cleanQuery, patternEntry.eqFmt);
+                    break;
+                default:
+                    std::cerr << "Could not process query syntax. Consider revising your input.";
+                    break;
+            }
+        }
     }
 }
-
-
-QueryEngine::~QueryEngine()
-= default;

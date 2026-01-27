@@ -15,18 +15,17 @@ inline static auto is_file_empty = [](const fs::path& filePath) {
     }
     return true;
 };
-class Core {
-public:
-    Core();
-    ~Core();
-    static std::string NormalizeQuery(const std::string& query);
 
+namespace Core {
+    std::string NormalizeQuery(const std::string& query);
+    double FindSurdExpression(const double& d, double& outerSurd);
+    bool isPrime(const double& d);
+    bool isPerfectSquare(const double& d);
 
-
-    void WriteDataResults(const std::string& txtFileName){};
+    inline void WriteDataResults(const std::string& txtFileName){};
 
     template<typename C, typename V, typename ... Args>
-    void WriteDataResults(const std::string& txtFileName, C&& var, V&& val, Args&&... args) {
+    static void WriteDataResults(const std::string& txtFileName, C&& var, V&& val, Args&&... args) {
         const fs::path directory = "C:\\Math\\Conics";
         if (!fs::exists(directory)) {
             std::cerr << directory << " does not exist. Creating it...";

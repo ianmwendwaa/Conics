@@ -30,16 +30,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="52150378-6ea9-414d-9ef5-39073f4b53b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/geometry.txt" beforeDir="false" afterPath="$PROJECT_DIR$/geometry.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/circle/circle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/circle/circle.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/circle/circle.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/circle/circle.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometry.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometry.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometry.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/core/core.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core.h" beforeDir="false" afterPath="$PROJECT_DIR$/core/core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/queryengine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/queryengine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/queryengine.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/queryengine.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/geometry.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/geometry.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,30 +222,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CMake Application.Conics.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.open_file.executor": "Run",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Math/Conics",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.Conics.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.open_file.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Math/Conics&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Math\Conics\src\geometry" />
+      <recent name="C:\Math\Conics\types" />
+      <recent name="C:\Math\Conics\core" />
+    </key>
+  </component>
   <component name="RunManager" selected="CMake Application.Conics">
     <configuration name="Conics" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Conics" TARGET_NAME="Conics" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Conics" RUN_TARGET_NAME="Conics">
       <method v="2">
@@ -323,7 +334,9 @@
       <workItem from="1769167641120" duration="36611000" />
       <workItem from="1769334587229" duration="357000" />
       <workItem from="1769334996572" duration="713000" />
-      <workItem from="1769336233824" duration="11695000" />
+      <workItem from="1769336233824" duration="13543000" />
+      <workItem from="1769419046543" duration="14904000" />
+      <workItem from="1769504938748" duration="6339000" />
     </task>
     <servers />
   </component>
@@ -334,15 +347,5 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/geometry.cpp</url>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
