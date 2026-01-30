@@ -28,7 +28,7 @@ void Circle::ParseQuery(const std::string& query, const std::regex& pattern, Equ
     }
 }
 void Circle::GeneralForm(const std::string& query, const std::regex& pattern) {
-    const auto cd = new CircleData;
+    const auto cd = new GenCircleData;
     if (std::smatch matches; std::regex_match(query, matches, pattern)) {
         // x2 + y2 + 2gx + 2fy + c = 0
         cd->x_g = std::stod(matches[1].str());
@@ -45,7 +45,15 @@ void Circle::GeneralForm(const std::string& query, const std::regex& pattern) {
     delete cd;
 }
 void Circle::StandardForm(const std::string& query, const std::regex& pattern) {
-
+    // (x-x1)2+(y-y1)2-r2 -> C(x1,y1)
+    const auto scD = new StdCircleData;
+    if (std::smatch matches; std::regex_match(query, matches, pattern)) {
+        scD->x1 = std::stod(matches[1].str());
+        scD->x2 = std::stod(matches[2].str());
+    }
+    std::cout << scD->x1 << "\n";
+    std::cout << scD->x2 << "\n";
+    delete scD;
 }
 void Circle::PolarForm(const std::string& query, const std::regex& pattern) {
 

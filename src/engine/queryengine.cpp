@@ -8,7 +8,7 @@
 
 void QueryEngine::AscertainQueryType(const std::string &query) {
     const std::string cleanQuery = Core::NormalizeQuery(query);
-    QueryType queryType = QueryType::UNKNOWN;
+    QueryType queryType = QueryType::UNKNOWN_QUERY_TYPE;
 
     for (const auto& patternEntry: queryDecTree) {
         if (std::smatch matches; std::regex_match(cleanQuery, matches, patternEntry.queryRgx)) {

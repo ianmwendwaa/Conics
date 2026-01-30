@@ -22,6 +22,7 @@ struct QueryInfo {
 namespace  QueryEngine
 {
     void AscertainQueryType(const std::string& query);
+    static std::vector<>
     static std::vector<QueryInfo> queryDecTree = {
         //1. Construct 1: For quadratics:
     {std::regex(R"(([+-]?\d*)x2([+-]\d*)x([+-]\d*)=0)"), GEOMETRY_ENGINE, STANDARD},
@@ -39,5 +40,4 @@ namespace  QueryEngine
 };;
 
 };
-
 #endif // QUERYENGINE_H

@@ -6,8 +6,11 @@
 #include "src/engine/queryengine.h"
 namespace Circle
 {
-    struct CircleData {
+    struct GenCircleData {
         double x_g, y_g, tg_g, tf_g, c_g;
+    };
+    struct StdCircleData {
+        double x1, x2;
     };
     enum class Intent {
         FIND_EQUATION, FIND_INTERSECTION, FIND_CENTRE, FIND_RADIUS_LENGTH,
