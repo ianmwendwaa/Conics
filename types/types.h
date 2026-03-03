@@ -15,7 +15,6 @@ enum EquationForm {
 enum QueryIntent {
     FIND_RADIUS, FIND_EQUATION, FIND_CENTRE, FIND_STD_FORM, FIND_GEN_FORM, FIND_VTX_FORM
 };
-
 struct QueryInfo {
     std::regex queryRgx;
     QueryType type;

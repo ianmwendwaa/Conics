@@ -47,7 +47,7 @@ namespace Core {
         };
         if (s.empty()) return 1.0;
         const double s_val = std::stod(s);
-        return is_variable(reinterpret_cast<char>(s.c_str())) ? 1.0 : s_val;
+        // return is_variable(reinterpret_cast<char>(s.c_str())) ? 1.0 : s_val;
     }
     template<typename C, typename V, typename ... Args>
     static void WriteDataResults(const std::string& txtFileName, C&& var, V&& val, Args&&... args) {

@@ -17,16 +17,16 @@ struct QuadraticVariadic {
 class Geometry {
 public:
     Geometry();
-    void QuadraticRoots(const std::string& query);
     void StandardFormEvaluator(const std::string& query, const std::regex& pattern);
     void FactoredFormEvaluator(const std::string& query, const std::regex& pattern);
     void VertexFormEvaluator();
     static void ParseQuery(const std::string& query, const std::regex& pattern, EquationForm format);
     void VertexQuadraticForm();
     static void CompareAndSolveEquation();
+    void QuadraticRoots();
     ~Geometry();
 private:
-    std::string geoQuery;
+    std::string geo_query;
     double a{}, b{}, c{};
     double inner_surd{}, outer_surd{};
     double a_v{}, b_v{};

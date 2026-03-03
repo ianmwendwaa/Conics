@@ -1,6 +1,7 @@
 #include "src/geometry/geometry.h"
 
 #include <cmath>
+#include "lib/math.h"
 Geometry::Geometry() = default;
 
 void Geometry::ParseQuery(const std::string &query, const std::regex& pattern, const EquationForm format) {
@@ -33,6 +34,7 @@ void Geometry::StandardFormEvaluator(const std::string &query, const std::regex&
      * the value of x2 to 1. Therefore, the program should clear the air, should any of the values fail to
      * be explicitly defined. Map them to 1. The helper function below aids in this.
      */
+    this->geo_query = query;
     auto parse_coefficients = [&](const std::string& s){
         // ToDo: This is just glue code that seems to work at the moment. Shall revisit...
         if (s.empty()) return 1.0;
@@ -60,10 +62,12 @@ void Geometry::StandardFormEvaluator(const std::string &query, const std::regex&
         // Expressing in surd form gives:
         std::cout << "Expressed in surd form: " <<
             (std::fmod(this->b, two_a) == 0 ? -this->b/two_a : -this->b) << "+- _/"<< discriminant <<"\n";
+        std::cout << "Expressed in simplest surd form: \n" << CMath::find_surd_expression(discriminant);
     }
 
     // If it is negative, it has no real roots, or two complex roots
-    if (discriminant < 0){
+    if (discriminant < 0)
+    {
         // Express the result in its simplest form, should b be a multiple of 2a
         if (std::fmod(this->b, two_a) == 0) {
             // Express it as: a ± bi
@@ -75,6 +79,24 @@ void Geometry::StandardFormEvaluator(const std::string &query, const std::regex&
             std::cout << "x2: " <<-this->b << "- √"<<discriminant << ")/" << two_a<<"\n";
         }
     }
+    // Finding quadratic roots using the provided equation
+    /* Consider an equation as used before: x2+6x+10=0. To get the quadratic roots, we have to find two numbers
+     * which when added give us +6 and when multiplied,give us +10...bummer. Or should I just stick to the quadratic
+     * formula? Well, for the purpose of testing my sanity's limits, I guess it's worth chasing
+     */
+
+    // variables to store these two numbers
+    double num1{}, num2 = 1;
+    bool ints_found = false;
+    // Infinitely search for these two numbers and break when a match is found
+    // while (ints_found){
+    //     if (num1*num2 == this->c && num1+num2 == this->b){
+    //         std::cout << "Roots of the equation" << query << "is: " << num1 << " and " << num2;
+    //         ints_found = true;
+    //     }
+    //     num1++;
+    //     num2++;
+    // }
 }
 
 void Geometry::FactoredFormEvaluator(const std::string &query,const std::regex& pattern) {
@@ -96,4 +118,9 @@ void Geometry::VertexFormEvaluator() {
         std::cout << "f(x) > 0 for all values of x\n";
     }
 }
+
+void Geometry::QuadraticRoots(){
+
+}
+
 Geometry::~Geometry() = default;

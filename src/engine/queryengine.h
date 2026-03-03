@@ -7,7 +7,7 @@
 
 #include "src/geometry/geometry.h"
 class Geometry;
-namespace Circle{ void ParseQuery(std::string& query, const std::regex& pattern, EquationForm format);}
+class Circle;
 
 namespace  QueryEngine{
     static std::vector<QueryInfo> queryDecTree = {
@@ -49,6 +49,5 @@ namespace  QueryEngine{
             }
         }
     }
-
 };
 #endif // QUERYENGINE_H
