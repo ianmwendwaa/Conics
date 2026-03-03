@@ -1,13 +1,10 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
-#include <algorithm>
 #include <regex>
 #include <string>
-#include <utility>
 
 #include "../../core/core.h"
-#include <src/engine/queryengine.h>
-#pragma once
+#include "types/types.h"
 
 enum QuadraticType {
     STD_FORM, FACTORED_FORM, VERTEX_FORM
@@ -17,29 +14,21 @@ struct QuadraticVariadic {
     QuadraticType type;
 };
 
-namespace Geometry {
-    struct Data {
-        double a{}, b{}, c{};
-        double inner_surd{}, outer_surd{};
-        double a_v{}, b_v{};
-
-        Data() = default;
-        ~Data() = default;
-
-        Data(double a1 = 0, double b1 = 0, double c1 = 0, double inn1 = 0, double out2 = 0,
-            double av1 = 0, double bv1 = 0):
-        a(a1), b(b1), c(c1), inner_surd(inn1), outer_surd(out2), a_v(av1), b_v(bv1){}
-    };
+class Geometry {
+public:
+    Geometry();
     void QuadraticRoots(const std::string& query);
     void StandardFormEvaluator(const std::string& query, const std::regex& pattern);
     void FactoredFormEvaluator(const std::string& query, const std::regex& pattern);
-    void VertexFormEvaluator(const std::string& query, const std::regex& pattern);
-    void ParseQuery(const std::string& query, const std::regex& pattern, EquationForm format);
-
-    inline std::string geoQuery;
-
+    void VertexFormEvaluator();
+    static void ParseQuery(const std::string& query, const std::regex& pattern, EquationForm format);
     void VertexQuadraticForm();
-    void CompareAndSolveEquation();
-    double FindSurdExpression(const double& d);
+    static void CompareAndSolveEquation();
+    ~Geometry();
+private:
+    std::string geoQuery;
+    double a{}, b{}, c{};
+    double inner_surd{}, outer_surd{};
+    double a_v{}, b_v{};
 };
 #endif //GEOMETRY_H

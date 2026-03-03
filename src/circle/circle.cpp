@@ -7,8 +7,9 @@
 
 #include "../../types/types.h"
 
-void Circle::ParseQuery(const std::string& query, const std::regex& pattern, EquationForm format) {
-
+void Circle::ParseQuery(std::string& query, const std::regex& pattern, EquationForm format) {
+    const auto cd = new GenCircleData;
+    cd->equationQuery = query;
     switch (format) {
         case EquationForm::GENERAL:
             GeneralForm(query, pattern);
@@ -26,9 +27,11 @@ void Circle::ParseQuery(const std::string& query, const std::regex& pattern, Equ
             std::cerr << "Could not ascertain the circle's equation format.\n";
             break;
     }
+    delete cd;
 }
-void Circle::GeneralForm(const std::string& query, const std::regex& pattern) {
+void Circle::GeneralForm(std::string& query, const std::regex& pattern) {
     const auto cd = new GenCircleData;
+    query = cd->equationQuery;
     if (std::smatch matches; std::regex_match(query, matches, pattern)) {
         // x2 + y2 + 2gx + 2fy + c = 0
         cd->x_g = std::stod(matches[1].str());

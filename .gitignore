@@ -12,6 +12,10 @@
 *.rej
 *.so
 *.so.*
+.venv
+.idea
+cmake-build-debug
+.gitignore
 *_pch.h.cpp
 *_resource.rc
 *.qm

@@ -1,28 +1,15 @@
 #ifndef QUERYENGINE_H
 #define QUERYENGINE_H
-#include <memory>
+#include "core/core.h"
+#include "types/types.h"
+#include <string>
 #include <regex>
 
-#include "src/circle/circle.h"
-#include "src/parabola/parabola.h"
-#include "src/hyperbola/hyperbola.h"
+#include "src/geometry/geometry.h"
+class Geometry;
+namespace Circle{ void ParseQuery(std::string& query, const std::regex& pattern, EquationForm format);}
 
-#include <string>
-
-#include "../geometry/geometry.h"
-
-struct QueryInfo {
-    std::regex queryRgx;
-    QueryType type;
-    EquationForm eqFmt;
-
-    QueryInfo(std::regex r, QueryType t, EquationForm e): queryRgx(std::move(r)), type(t), eqFmt(e){}
-};
-
-namespace  QueryEngine
-{
-    void AscertainQueryType(const std::string& query);
-    static std::vector<>
+namespace  QueryEngine{
     static std::vector<QueryInfo> queryDecTree = {
         //1. Construct 1: For quadratics:
     {std::regex(R"(([+-]?\d*)x2([+-]\d*)x([+-]\d*)=0)"), GEOMETRY_ENGINE, STANDARD},
@@ -34,10 +21,34 @@ namespace  QueryEngine
 
     //2. Construct 2: For circles:
     {std::regex(R"(([+-]?\d*)x2([+-]\d+)y2([+-]\d*)x([+-]\d*)y([+-]\d*)=0)"), CIRCLE_ENGINE, STANDARD},
-    {std::regex(R"(([+-]\d*)x2([+-]\d*)y2([+-]\d*)x([+-]\d*)y([+-]\d*)=0)"), CIRCLE_ENGINE, GENERAL}
+    {std::regex(R"(([+-]?\d*)x2([+-]\d*)y2([+-]\d*)x([+-]\d*)y([+-]\d*)=0)"), CIRCLE_ENGINE, GENERAL}
 
     // Construct 3: Parabola
-};;
+    };;
+
+    inline void AscertainQueryType(const std::string& query) {
+        std::string cleanQuery = Core::NormalizeQuery(query);
+        QueryType queryType = QueryType::UNKNOWN_QUERY_TYPE;
+
+        for (const auto& patternEntry: queryDecTree) {
+            if (std::smatch matches; std::regex_match(cleanQuery, matches, patternEntry.queryRgx)) {
+                queryType = patternEntry.type;
+                switch (queryType) {
+                case QueryType::GEOMETRY_ENGINE:
+                        std::cout << "GEOMETRY_ENGINE" << std::endl;
+                        Geometry::ParseQuery(cleanQuery, patternEntry.queryRgx, patternEntry.eqFmt);
+                        break;
+                case QueryType::CIRCLE_ENGINE:
+                        std::cout << "CIRCLE_ENGINE" << std::endl;
+                        Circle::ParseQuery(cleanQuery, patternEntry.queryRgx, patternEntry.eqFmt);
+                        break;
+                default:
+                    std::cerr << "Could not process query syntax. Consider revising your input.";
+                    break;
+                }
+            }
+        }
+    }
 
 };
 #endif // QUERYENGINE_H
